@@ -24,6 +24,7 @@ class CreateThreadsTest extends TestCase
 
     }
 
+//      Two functions combined into the one on top
 //    /** @test */
 //    function guests_may_not_create_threads()
 //    {
