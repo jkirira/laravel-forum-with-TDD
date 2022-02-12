@@ -11,6 +11,7 @@
                         <form method="POST" action="/threads">
                             {{ csrf_field() }}
                             <div class="form-group">
+
                                 <label for="channel_id">Choose a channel:</label>
                                 <select type="text" class="form-control" id="channel_id" name="channel_id" value="old('channel_id')">
                                     <option>Choose one...</option>
@@ -20,6 +21,7 @@
                                         </option>
                                     @endforeach
                                 </select>
+
                             </div>
                             <div class="form-group">
                                 <label for="title">Title:</label>
