@@ -13,7 +13,7 @@ class ReadThreadsTest extends TestCase
     public function setUp(){
         parent::setup();
         $this->thread = factory('App\Thread')->create();
-}
+    }
 
     /** @test  */
      public function a_user_can_browse_threads()
