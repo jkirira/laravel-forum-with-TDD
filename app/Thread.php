@@ -35,4 +35,11 @@ class Thread extends Model
     {
         $this->replies()->create($reply);
     }
+
+    // accepts a set of filters
+    public function scopeFilter($query, $filters)
+    {
+        //apply those filters to the current thread we have running
+        return $filters->apply($query);
+    }
 }
