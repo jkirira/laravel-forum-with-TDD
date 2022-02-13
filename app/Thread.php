@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\RecordsActivity;
 
 class Thread extends Model
 {
+    use RecordsActivity;
 
     protected $guarded = [];
 
@@ -28,6 +30,7 @@ class Thread extends Model
         });
 
     }
+
 
     public function path()
     {

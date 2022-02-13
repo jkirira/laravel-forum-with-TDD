@@ -9,6 +9,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $guarded = [];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,7 +29,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'name';
     }
