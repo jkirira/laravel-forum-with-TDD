@@ -18,7 +18,7 @@
                     @include('threads.reply')
                 @endforeach
 
-                {{ $replies->links }}
+                {{ $replies->links() }}
 
                 @if(auth()->check())
                     <form method="POST" action="{{ $thread->path().'/replies' }}">
