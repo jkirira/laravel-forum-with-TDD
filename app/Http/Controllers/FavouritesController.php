@@ -15,11 +15,12 @@ class FavouritesController extends Controller
 
     public function store(Reply $reply)
     {
-        return $reply->favourite();
+        $reply->favourite();
 //        Favourite::create([
 //            'user_id' => auth()->id(),
 //            'favourited_id' => $reply->id,
 //            'favourited_type' => get_class($reply),
 //        ]);
+        return back();
     }
 }
