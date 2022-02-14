@@ -29,7 +29,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function getRouteKeyName(): string
+    public function getRouteKeyName()
     {
         return 'name';
     }
