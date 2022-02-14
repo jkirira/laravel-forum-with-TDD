@@ -28,6 +28,8 @@ class ThreadsController extends Controller
             return $threads;
         }
 
+
+
         return view('threads.index', compact('threads'));
     }
 
@@ -137,7 +139,9 @@ class ThreadsController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
+
         $threads = $threads->get();
+
         return $threads;
     }
 }

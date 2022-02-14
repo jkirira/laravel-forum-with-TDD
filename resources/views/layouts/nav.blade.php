@@ -42,7 +42,7 @@
 
                     <ul class="dropdown-menu">
                         @foreach($channels as $channel)
-                            <li><a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('channels', $channel->slug) }}">{{ $channel->name }}</a></li>
                         @endforeach
                     </ul>
                 </li>

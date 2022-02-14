@@ -14,23 +14,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        \View::composer('threads.create', function($view){
-//            $view->with('channels', \App\Channel::all());
-//        });
-//        \View::composer('threads.index', function($view){
-//            $view->with('channels', \App\Channel::all());
-//        });
-//
-//        \View::composer('layouts.app', function($view){
-//            $view->with('channels', \App\Channel::all());
-//        });
-
-        \View::composer('*', function($view){
-            $channels = \Cache::rememberForever('channels', function (){
-                return Channel::all();
-            });
-            $view->with('channels', $channels);
+        \View::composer('threads.create', function($view){
+            $view->with('channels', \App\Channel::all());
         });
+        \View::composer('threads.index', function($view){
+            $view->with('channels', \App\Channel::all());
+        });
+
+        \View::composer('layouts.app', function($view){
+            $view->with('channels', \App\Channel::all());
+        });
+
+//        \View::composer('*', function($view){
+//            $channels = \Cache::rememberForever('channels', function (){
+//                return Channel::all();
+//            });
+//            $view->with('channels', $channels);
+//        });
 
 
 //        \View::share('channels', Channel::all());
