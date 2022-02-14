@@ -16,7 +16,7 @@
                         $date
                     </h3>
                     @foreach($activity as $record)
-                        @include('profiles.activities.{record->type}', ['activity' => $record]);
+                        @include("profiles.activities.{$record->type}", ['activity' => $record]);
                     @endforeach
                 @endforeach
 
