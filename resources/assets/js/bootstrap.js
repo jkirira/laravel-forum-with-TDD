@@ -1,13 +1,27 @@
-
 window._ = require('lodash');
+import Popper from 'popper.js/dist/umd/popper.js';
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
+ * Include the Popper.js library, since Boostrap 4 requires it
  */
-require('bootstrap');
+try {
+    window.$ = window.jQuery = require('jquery');
 
+    window.Popper = Popper;
+
+    require('bootstrap');
+} catch (e) {}
+
+/**
+ * Vue is a modern JavaScript library for building interactive web interfaces
+ * using reactive data binding and reusable components. Vue's API is clean
+ * and simple, leaving you to focus on building your next great project.
+ */
+
+window.Vue = require('vue');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -17,7 +31,9 @@ require('bootstrap');
 
 window.axios = require('axios');
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest'
+};
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
