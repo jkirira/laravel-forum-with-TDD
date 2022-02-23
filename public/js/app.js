@@ -375,33 +375,6 @@ module.exports = {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11289,6 +11262,33 @@ return jQuery;
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14017,7 +14017,7 @@ return Popper;
 })));
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 5 */
@@ -14627,7 +14627,7 @@ window.Vue = __webpack_require__(5);
  */
 
 Vue.component('flash', __webpack_require__(41));
-Vue.component('rply', __webpack_require__(49));
+Vue.component('reply', __webpack_require__(49));
 
 var app = new Vue({
   el: '#app'
@@ -14651,7 +14651,7 @@ window._ = __webpack_require__(16);
  * Include the Popper.js library, since Boostrap 4 requires it
  */
 try {
-  __webpack_provided_window_dot_$ = __webpack_provided_window_dot_jQuery = __webpack_require__(2);
+  __webpack_provided_window_dot_$ = __webpack_provided_window_dot_jQuery = __webpack_require__(1);
 
   window.Popper = __WEBPACK_IMPORTED_MODULE_0_popper_js_dist_umd_popper_js___default.a;
 
@@ -14714,7 +14714,7 @@ window.flash = function (message) {
 //     cluster: 'mt1',
 //     encrypted: true
 // });
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1), __webpack_require__(1)))
 
 /***/ }),
 /* 16 */
@@ -31931,7 +31931,7 @@ window.flash = function (message) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(17)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(17)(module)))
 
 /***/ }),
 /* 17 */
@@ -35796,7 +35796,7 @@ var Popover = function ($) {
 
 
 })();
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
 
 /***/ }),
 /* 19 */
@@ -47812,7 +47812,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(20).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(20).setImmediate))
 
 /***/ }),
 /* 20 */
@@ -47882,7 +47882,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 21 */
@@ -48075,7 +48075,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(6)))
 
 /***/ }),
 /* 22 */
@@ -49535,8 +49535,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-
+/* WEBPACK VAR INJECTION */(function($) {
 /* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'Reply',
     props: ['attributes'],
     data: function data() {
         return {
@@ -49547,21 +49548,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         update: function update() {
+
             axios.patch('/replies/' + this.attributes.id, {
                 body: this.body
             });
+
             this.editing = false;
 
             flash('Updated!');
+        },
+        destroy: function destroy() {
+            axios.delete('/replies/' + this.attributes.id);
+
+            $(this.$el).fadeOut(300, function () {
+                flash('Your Reply has been deleted.');
+            });
         }
     }
 });
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
 /* 51 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: Missing binding /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/node-sass/vendor/darwin-x64-83/binding.node\nNode Sass could not find a binding for your current environment: OS X 64-bit with Node.js 14.x\n\nFound bindings for the following environments:\n  - Linux 64-bit with Node.js 14.x\n\nThis usually happens because your environment has changed since running `npm install`.\nRun `npm rebuild node-sass` to download the binding for your current environment.\n    at module.exports (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/node-sass/lib/binding.js:15:13)\n    at Object.<anonymous> (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/node-sass/lib/index.js:14:35)\n    at Module._compile (internal/modules/cjs/loader.js:1063:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n    at Module.load (internal/modules/cjs/loader.js:928:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:769:14)\n    at Module.require (internal/modules/cjs/loader.js:952:19)\n    at require (internal/modules/cjs/helpers.js:88:18)\n    at Object.<anonymous> (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/sass-loader/lib/loader.js:3:14)\n    at Module._compile (internal/modules/cjs/loader.js:1063:30)\n    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)\n    at Module.load (internal/modules/cjs/loader.js:928:32)\n    at Function.Module._load (internal/modules/cjs/loader.js:769:14)\n    at Module.require (internal/modules/cjs/loader.js:952:19)\n    at require (internal/modules/cjs/helpers.js:88:18)\n    at loadLoader (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/loadLoader.js:18:17)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:365:2)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/NormalModule.js:195:19\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:367:11\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:172:11\n    at loadLoader (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/loadLoader.js:32:11)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:165:10)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:176:18\n    at loadLoader (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/loadLoader.js:47:3)\n    at iteratePitchingLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:169:2)\n    at runLoaders (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/loader-runner/lib/LoaderRunner.js:365:2)\n    at NormalModule.doBuild (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/NormalModule.js:182:3)\n    at NormalModule.build (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/NormalModule.js:275:15)\n    at Compilation.buildModule (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/Compilation.js:157:10)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/Compilation.js:460:10\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/NormalModuleFactory.js:243:5\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/NormalModuleFactory.js:94:13\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/tapable/lib/Tapable.js:268:11\n    at NormalModuleFactory.<anonymous> (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (/Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/tapable/lib/Tapable.js:272:13)\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/NormalModuleFactory.js:69:10\n    at /Users/jkirira/Documents/James/code/web/laravel-projects/laracasts-forum/node_modules/webpack/lib/NormalModuleFactory.js:196:7\n    at processTicksAndRejections (internal/process/task_queues.js:75:11)");
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
