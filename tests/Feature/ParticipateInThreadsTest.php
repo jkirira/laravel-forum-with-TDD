@@ -7,7 +7,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ParticipateInForumTest extends TestCase
+class ParticipateInThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
@@ -79,4 +79,33 @@ class ParticipateInForumTest extends TestCase
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
     }
+
+    /** @test  */
+    function unauthorized_users_cannot_update_replies()
+    {
+        $this->withExceptionHandling();
+
+        $reply = create('App\Reply');
+
+        $this->patch("/replies/{$reply->id}")
+            ->assertRedirect('login');
+
+        $this->signIn()
+            ->patch("/replies/{$reply->id}")
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    function authorized_users_can_update_replies()
+    {
+        $this->signIn();
+
+        $reply = create('App\Reply', ['user_id' => auth()->id()]);
+
+        $updated_reply = 'You been changed, fool.';
+        $this->patch("replies/{$reply->id}", ['body' => $updated_reply]);
+
+        $this->assertDatabaseHas('replies', ['body' => $updated_reply]);
+    }
+
 }
