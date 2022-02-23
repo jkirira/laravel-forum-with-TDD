@@ -48,10 +48,17 @@
                     Edit
                 </button>
 
-                <button class="btn btn-xs mr-1" @click="destroy">
-                    Delete
-                </button>
+{{--                <button class="btn btn-xs mr-1" @click="destroy">--}}
+{{--                    Delete--}}
+{{--                </button>--}}
 
+                <form method="POST" action="/replies/{{$reply->id}}">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    <button type="submit" class="btn btn-danger btn-xs">
+                        delete
+                    </button>
+                </form>
             </div>
         @endcan
 
