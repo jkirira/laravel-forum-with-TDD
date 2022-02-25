@@ -30,6 +30,22 @@ class FavouriteTest extends TestCase
         $this->assertCount(1, $reply->favourites);
     }
 
+   /** @test  */
+    public function an_authenticated_user_can_unfavourite_any_reply()
+    {
+        $this->signIn();
+
+        $reply = create('App\Reply');
+
+        $reply->favourite();
+
+        $this->delete('replies/'.$reply->id.'/favourites');
+
+        $this->assertCount(0, $reply->favourites);
+
+        //$reply->fresh()->favourites;
+    }
+
     /** @test  */
     public function an_authenticated_user_may_only_favourite_a_reply_once()
     {
@@ -38,6 +54,7 @@ class FavouriteTest extends TestCase
         $reply = create('App\Reply');
 
         $this->post('replies/'.$reply->id.'/favourites');
+
         $this->post('replies/'.$reply->id.'/favourites');
 
         $this->assertCount(1, $reply->favourites);

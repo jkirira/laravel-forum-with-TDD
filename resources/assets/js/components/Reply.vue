@@ -1,6 +1,10 @@
 <script>
+import Favourite from "./Favourite.vue"
 export default{
     name: 'Reply',
+    components: {
+        Favourite
+    },
     props: ['attributes'],
     data() {
         return {
