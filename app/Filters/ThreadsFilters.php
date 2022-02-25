@@ -9,7 +9,7 @@ use App\User;
 class ThreadsFilters extends Filters {
 
     //filters we can respond to
-    protected $filters = ['by', 'popular'];
+    protected $filters = ['by', 'popular', 'unanswered'];
 
     protected function by($username){
         $user = User::where('name', $username)->firstOrFail();
@@ -21,7 +21,12 @@ class ThreadsFilters extends Filters {
     {
         $this->builder->getQuery()->orders = [];
 
-        $this->builder->orderBy('replies_count', 'desc');
+        return $this->builder->orderBy('replies_count', 'desc');
+    }
+
+    protected function unanswered()
+    {
+        return $this->builder->where('replies_count', 0);
     }
 
 }
