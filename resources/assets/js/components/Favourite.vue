@@ -1,6 +1,6 @@
 <template>
 
-    <button type="submit" :class="classes">
+    <button @click="toggle" :class="classes">
         <span class="glyphicon glyphicon-heart"></span>
         <span class="" v-text="count"></span>
     </button>
@@ -25,7 +25,7 @@ export default{
             ]
         },
         endpoint(){
-            return '/replies' + this.reply.id + '/favourites';
+            return '/replies/' + this.reply.id + '/favourites';
         }
     },
     methods: {

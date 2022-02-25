@@ -28,8 +28,6 @@ class ThreadsController extends Controller
             return $threads;
         }
 
-
-
         return view('threads.index', compact('threads'));
     }
 
@@ -72,14 +70,10 @@ class ThreadsController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Thread  $thread
-     * @return \Illuminate\Http\Response
      */
     public function show($channel, Thread $thread)
     {
-        return view('threads.show', [
-            'thread' => $thread,
-            'replies' => $thread->replies()->paginate(20)
-        ]);
+        return view('threads.show', compact('thread'));
     }
 
     /**

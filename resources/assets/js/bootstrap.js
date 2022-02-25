@@ -41,11 +41,12 @@ window.axios.defaults.headers.common = {
  * a simple convenience so we don't have to attach every token manually.
  */
 
-let token = window.app.csrfToken
+window.axios.defaults.header = {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+}
 
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
+if( !window.axios.defaults.header['X-CSRF-TOKEN'] )
+{
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 

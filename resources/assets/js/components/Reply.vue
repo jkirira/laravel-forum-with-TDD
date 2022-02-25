@@ -8,11 +8,11 @@
                         <a :href="'/profiles/' + data.owner.name "
                            v-text="data.owner.name">
                         </a>
-                        said {{ data.created_at }} ...
+                        said <span v-text="ago"></span>
                     </h5>
 
                     <div v-if="signedIn">
-                        <favourite :reply=" data "></favourite>
+                        <favourite :reply="data"></favourite>
                     </div>
 
                 </div>
@@ -54,6 +54,7 @@
 
 <script>
 import Favourite from "./Favourite.vue"
+import moment from 'moment'
 export default{
     name: 'Reply',
     components: {
@@ -64,12 +65,15 @@ export default{
         return {
             editing: false,
             id: this.data.id,
-            body: this.data.body
+            body: this.data.body,
         };
     },
     computed: {
+        ago(){
+            return moment(this.data.created_at).fromNow() + ' ...';
+        },
         signedIn(){
-            return window.App.signedIn;
+            return window.app.signedIn;
         },
         canUpdate(){
             return this.authorize(user => this.data.user_id == user.id);

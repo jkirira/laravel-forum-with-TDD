@@ -30,15 +30,7 @@
                         </div>
                     </div>
 
-                    <replies
-                            :data="{{ $thread->replies }}"
-                             @added = "repliesCount++"
-                             @removed = "repliesCount--">
-                    </replies>
-
-    {{--                {{ $replies->links() }}--}}
-
-
+                    <replies @added = "repliesCount++" @removed = "repliesCount--"></replies>
 
                 </div>
 
@@ -47,7 +39,9 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             This thread was published at {{ $thread->created_at->diffForHumans() }} by
-                            <a href="#"> {{ $thread->creator->name}}</a> and currently has <span v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}.
+                            <a href="#"> {{ $thread->creator->name}}</a> and currently has
+                            <span v-text="repliesCount"></span>
+                            {{ str_plural('comment', $thread->replies_count) }}.
 
                         </div>
                     </div>

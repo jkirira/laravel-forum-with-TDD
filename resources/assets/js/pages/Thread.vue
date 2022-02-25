@@ -1,7 +1,7 @@
 <script>
 import Replies from "../components/Replies.vue";
- export default {
-     props: ['initialrepliescount'],
+export default {
+    props: ['initialrepliescount'],
     components: {
         Replies
     },
