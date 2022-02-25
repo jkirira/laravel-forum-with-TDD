@@ -17,7 +17,6 @@ window.Vue = require('vue');
 
 Vue.component('flash', require('./components/Flash.vue'));
 
-
 Vue.component('thread-view', require('./pages/Thread.vue'));
 // Vue.component('favourite', require('./components/Favourite.vue'));
 
