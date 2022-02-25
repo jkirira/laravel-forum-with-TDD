@@ -41,7 +41,7 @@ window.axios.defaults.headers.common = {
  * a simple convenience so we don't have to attach every token manually.
  */
 
-let token = document.head.querySelector('meta[name="csrf-token"]');
+let token = window.App.csrfToken
 
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
@@ -50,6 +50,12 @@ if (token) {
 }
 
 window.events = new Vue();
+
+Vue.prototype.authorize = function(handler){
+    let user = window.App.user;
+
+    return user ? handler(user) : false;
+}
 
 window.flash = function(message){
     window.events.$emit('flash', message)

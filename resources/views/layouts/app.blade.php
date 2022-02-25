@@ -13,6 +13,14 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <script>
+        window.app  = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'user' => Auth::user(),
+            'signedIn'  => Auth::check()
+        ]) !!};
+    </script>
+
     <style>
         body{
             padding-bottom: 100px;
@@ -34,7 +42,7 @@
 
 
 </head>
-<body style="padding-bottom: 100px">
+<body>
 <div id="app">
     @include('layouts.nav')
 
