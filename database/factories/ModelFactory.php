@@ -1,6 +1,8 @@
 <?php
 
 use Faker\Generator as Faker;
+use Illuminate\Notifications\DatabaseNotification;
+use Ramsey\Uuid\Uuid;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +14,7 @@ use Faker\Generator as Faker;
 | model instances for testing / seeding your application's database.
 |
 */
+
 
 $factory->define(App\User::class, function (Faker $faker) {
     return [
@@ -52,5 +55,17 @@ $factory->define(App\Channel::class, function($faker){
     return [
         'name' => $name,
         'slug' => $name,
+    ];
+});
+
+$factory->define(DatabaseNotification::class, function($faker){
+    return [
+        'id' => Uuid::uuid4()->toString(),
+        'type' => 'App\Notifications\ThreadWasUpdated',
+        'notifiable_id' => function (){
+            return auth()->id() ?: factory('App\User')->create()->id;
+        },
+        'notifiable_type' => 'App\User',
+        'data' => ['foo' => 'bar'],
     ];
 });
