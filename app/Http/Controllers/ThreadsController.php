@@ -16,9 +16,12 @@ class ThreadsController extends Controller
     {
         $this->middleware('auth')->except(['index', 'show']);
     }
+
     /**
      * Display a listing of the resource.
      *
+     * @param Channel $channel
+     * @param ThreadsFilters $filters
      * @return \Illuminate\Http\Response
      */
     public function index(Channel $channel, ThreadsFilters $filters)
@@ -77,9 +80,6 @@ class ThreadsController extends Controller
         if(auth()->check()){
             auth()->user()->read($thread);
         }
-        $key = sprintf("users.%s.visits.%s", auth()->id(), $thread->id);
-
-        cache()->forever($key, Carbon::now());
 
         return view('threads.show', compact('thread'));
     }
@@ -140,7 +140,6 @@ class ThreadsController extends Controller
         if ($channel->exists) {
             $threads->where('channel_id', $channel->id);
         }
-
 
         $threads = $threads->get();
 
