@@ -20,9 +20,7 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread, Spam $spam)
     {
-        $this->validate(request(), [ 'body' => 'required']);
-
-        $spam->detect(request('body'));
+        $this->validateReply();
 
         $reply = $thread->addReply([
             'body' => request('body'),
@@ -37,17 +35,19 @@ class RepliesController extends Controller
             ->with('flash', 'Your reply has been left');
     }
 
-    public function update(Reply $reply)
+    public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
 
+        $this->validateReply();
+
         $reply->update(['body' => request('body')]);
 
-        if(request()->expectsJson()){
-            return response(['status' => 'Reply updated']);
-        }
-
-        return back();
+//        if(request()->expectsJson()){
+//            return response(['status' => 'Reply updated']);
+//        }
+//
+//        return back();
     }
 
     public function destroy(Reply $reply)
@@ -61,5 +61,12 @@ class RepliesController extends Controller
         }
 
         return back();
+    }
+
+    public function validateReply()
+    {
+        $this->validate(request(), ['body' => 'required']);
+
+        resolve(Spam::class)->detect(request('body'));
     }
 }
