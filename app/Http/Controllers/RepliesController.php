@@ -20,28 +20,41 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread, Spam $spam)
     {
-        $this->validateReply();
+        try {
 
-        $reply = $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id(),
-        ]);
+            $this->validateReply();
 
-        if(request()->expectsJson()){
-            return $reply->load('owner');
+            $reply = $thread->addReply([
+                'body' => request('body'),
+                'user_id' => auth()->id(),
+            ]);
+        } catch (\Exception $e) {
+            return response('Sorry your reply could not be saved at this time', 422);
         }
 
-        return back()
-            ->with('flash', 'Your reply has been left');
+
+//        if(request()->expectsJson()){
+//            return $reply->load('owner');
+//        }
+
+        return $reply->load('owner');
+
+
     }
 
     public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
 
-        $this->validateReply();
+        try {
 
-        $reply->update(['body' => request('body')]);
+            $this->validateReply();
+
+            $reply->update(['body' => request('body')]);
+
+        } catch (\Exception $e) {
+            return response('Sorry your reply could not be saved at this time', 422);
+        }
 
 //        if(request()->expectsJson()){
 //            return response(['status' => 'Reply updated']);

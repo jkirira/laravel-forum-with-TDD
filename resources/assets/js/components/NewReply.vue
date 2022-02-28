@@ -39,6 +39,10 @@
         methods: {
             addReply(){
                 axios.post(location.pathname + '/replies', {body: this.body})
+                      .catch(error => {
+                          console.log('Error');
+                          flash(error.response.data)
+                      })
                     .then(response => {
 
                         this.body = ''
