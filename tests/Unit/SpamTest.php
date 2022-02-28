@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
-use App\Spam;
+use App\Inspections\Spam;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -13,11 +13,24 @@ class SpamTest extends TestCase
 
    /** @test  */
 
-    public function it_validates_spam()
+    public function it_checks_for_invalid_keywords()
     {
         $spam = new Spam();
 
         $this->assertFalse($spam->detect('Innocent reply Here'));
+
+        $this->expectException('Exception');
+
+        $spam->detect('yahoo customer support');
+    }
+
+    function it_checks_for_any_key_being_held_down()
+    {
+        $spam = new Spam();
+
+        $this->expectException('Exception');
+
+        $spam->detect('Hello world aaaaaaaaaa');
     }
 
  }
