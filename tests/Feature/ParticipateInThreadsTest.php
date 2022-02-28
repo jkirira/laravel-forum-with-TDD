@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\ThrottleException;
 use http\Exception;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -49,8 +50,8 @@ class ParticipateInThreadsTest extends TestCase
         $reply = make('App\Reply', ['body' => null]);
 
         $this->post($thread->path().'/replies', $reply->toArray())
-//            ->assertSessionHasErrors('body');
-            ->assertStatus(422);
+            ->assertSessionHasErrors('body');
+//            ->assertStatus(422);
 
     }
 
@@ -114,6 +115,8 @@ class ParticipateInThreadsTest extends TestCase
     /** @test  */
     function replies_that_contain_spam_may_not_be_created()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = create('App\Thread');
@@ -121,7 +124,7 @@ class ParticipateInThreadsTest extends TestCase
             'body' => 'Yahoo Customer Support'
         ]);
 
-        $this->post($thread->path().'/replies/', $reply->toArray())
+        $this->json('post', $thread->path().'/replies/', $reply->toArray())
             ->assertStatus(422);
     }
 
@@ -139,8 +142,10 @@ class ParticipateInThreadsTest extends TestCase
         $this->post($thread->path().'/replies/', $reply->toArray())
             ->assertStatus(200);
 
-        $this->post($thread->path().'/replies/', $reply->toArray())
-            ->assertStatus(422);
+        $this->expectException(ThrottleException::class);
+
+        $this->post($thread->path().'/replies/', $reply->toArray());
+//            ->assertStatus(422);
 
     }
 
