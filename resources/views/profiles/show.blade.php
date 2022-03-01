@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('header')
+    <link href="/css/vendor/jquery.atwho.css" rel="stylesheet">
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">

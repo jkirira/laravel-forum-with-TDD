@@ -40,6 +40,7 @@
         }
     </style>
 
+    @yield('header')
 
 </head>
 <body>
