@@ -22,7 +22,7 @@ class AddAvatarTest extends TestCase
             ->assertStatus(401);
     }
 
-    /** @test **/
+    /** @test */
     public function a_valid_avatar_must_be_provided()
     {
         $this->withExceptionHandling()->signIn();
@@ -32,7 +32,7 @@ class AddAvatarTest extends TestCase
         ])->assertStatus(422);
     }
 
-    /** @test **/
+    /** @test */
     public function a_user_may_add_an_avatar_to_an_image()
     {
         $this->withExceptionHandling()->signIn();
@@ -47,6 +47,5 @@ class AddAvatarTest extends TestCase
 
         Storage::disk('public')->assertExists('avatars/'.$file->hashName());
     }
-
 
  }

@@ -12,7 +12,7 @@ class ActivityTest extends TestCase
 {
     use DatabaseMigrations;
 
-   /** @test  */
+   /** @test */
     public function it_records_activity_when_a_thread_is_created()
     {
         $this->signIn();
@@ -31,7 +31,7 @@ class ActivityTest extends TestCase
         $this->assertEquals($activity->subject->id, $thread->id);
     }
 
-    /** @test  */
+    /** @test */
     public function it_records_activity_when_a_reply_is_created()
     {
         $this->signIn();
@@ -67,10 +67,7 @@ class ActivityTest extends TestCase
         $this->assertTrue($feed->keys()->contains(
             Carbon::now()->subWeek()->format('Y-m-d')
         ));
-
-
-
-
+        
     }
     
  }

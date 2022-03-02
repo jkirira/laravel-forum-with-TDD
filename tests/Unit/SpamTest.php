@@ -11,8 +11,7 @@ class SpamTest extends TestCase
 {
     use DatabaseMigrations;
 
-   /** @test  */
-
+    /** @test */
     public function it_checks_for_invalid_keywords()
     {
         $spam = new Spam();
@@ -24,6 +23,7 @@ class SpamTest extends TestCase
         $spam->detect('yahoo customer support');
     }
 
+    /** @test */
     function it_checks_for_any_key_being_held_down()
     {
         $spam = new Spam();
