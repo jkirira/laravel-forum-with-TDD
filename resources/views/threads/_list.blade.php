@@ -27,6 +27,10 @@
             <div class="body">{{ $thread->body }}</div>
         </div>
 
+        <div class="panel-footer">
+            {{ $thread->visits }} Visits
+        </div>
+
     </div>
 @empty
     <p>There are no relevant results at this time.</p>

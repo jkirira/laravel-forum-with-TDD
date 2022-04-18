@@ -81,6 +81,8 @@ class ThreadsController extends Controller
             auth()->user()->read($thread);
         }
 
+        $thread->increment('visits');
+
         return view('threads.show', compact('thread'));
     }
 
