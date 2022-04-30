@@ -10,8 +10,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $guarded = [];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -30,6 +28,10 @@ class User extends Authenticatable
          'password', 'remember_token', 'email'
     ];
 
+    protected $casts = [
+        'confirmed' => 'boolean'
+    ];
+
     public function getRouteKeyName()
     {
         return 'name';
@@ -43,6 +45,12 @@ class User extends Authenticatable
     public function activity()
     {
         return $this->hasMany(Activity::class);
+    }
+
+    public function confirm()
+    {
+        $this->confirmed = true;
+        $this->save();
     }
 
     public function getAvatarPathAttribute($avatar)
