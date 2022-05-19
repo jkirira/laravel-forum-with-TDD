@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Illuminate\Http\Request;
@@ -10,16 +10,15 @@ class RegisterConfirmationController extends Controller
 {
     public function index()
     {
-        try {
+        $user = User::where('confirmation_token', request('token'))->first();
 
-            User::where('confirmation_token', request('token'))
-                ->firstOrFail()
-                ->confirm();
+        if( !$user ) {
 
-        } catch (\Exception $e) {
-            return redirect(route('threads'))
-                 ->with('flash', 'Unknown token');
+            return redirect(route('threads'))->with('flash', 'Unknown token');
+
         }
+
+        $user->confirm();
 
         return redirect(route('threads'))
                 ->with('flash', 'Your account is now confirmed you may post to the forum');
