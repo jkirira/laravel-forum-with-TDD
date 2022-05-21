@@ -29,7 +29,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     function a_user_can_read_a_single_thread()
     {
-        $response = $this->get('/threads/'.$this->thread->channel->slug.'/'.$this->thread->id);
+        $response = $this->get('/threads/'.$this->thread->channel->slug.'/'.$this->thread->slug);
         $response->assertSee($this->thread->title);
     }
 
