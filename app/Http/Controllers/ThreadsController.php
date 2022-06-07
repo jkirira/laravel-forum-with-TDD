@@ -61,12 +61,15 @@ class ThreadsController extends Controller
         ]);
 
         $thread = Thread::create([
-            'channel_id' => $request['channel_id'],
             'user_id' => auth()->id(),
+            'channel_id' => $request['channel_id'],
             'title' => $request['title'],
             'body' => $request['body'],
-            'slug' => $request['title'],
         ]);
+
+        if($request->wantsJson()){
+            return $thread;
+        }
 
         return redirect($thread->path())
             ->with('flash', 'Your thread has been published');
