@@ -33,11 +33,6 @@
                 body: ''
             }
         },
-        computed: {
-            signedIn(){
-                return window.app.signedIn;
-            }
-        },
 
         mounted() {
             $('body').atwho({

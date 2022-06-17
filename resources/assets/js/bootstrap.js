@@ -52,11 +52,19 @@ if( !window.axios.defaults.header['X-CSRF-TOKEN'] )
 
 window.events = new Vue();
 
-Vue.prototype.authorize = function(handler){
-    let user = window.app.user;
+let authorizations = require('./authorizations')
 
-    return user ? handler(user) : false;
+Vue.prototype.authorize = function(...params){
+    if(! window.App.signedIn) return false;
+
+    if(typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1])
+    }
+
+    return params[0](window.App.user);
 }
+
+Vue.prototype.signedIn = window.App.signedIn
 
 window.flash = function(message, level='success'){
     window.events.$emit('flash', { message, level })
