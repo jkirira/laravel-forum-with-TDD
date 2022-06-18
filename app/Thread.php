@@ -77,6 +77,11 @@ class Thread extends Model
         return $reply;
     }
 
+    public function lock()
+    {
+        $this->update(['locked' => true]);
+    }
+
     // accepts a set of filters
     public function scopeFilter($query, $filters)
     {
