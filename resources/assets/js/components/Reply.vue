@@ -83,6 +83,13 @@ export default{
             return moment(this.data.created_at).fromNow() + ' ...';
         }
     },
+
+    created() {
+        window.events.$on('best-reply-selected', id => {
+            this.isBest = (id === this.id)
+        })
+    },
+
     methods: {
         update(){
 
@@ -106,6 +113,10 @@ export default{
 
         markBestReply(){
             this.isBest = true
+
+            axios.post('/replies/' + this.data.id + '/best')
+
+            window.events.$emit('best-reply-selected', this.data.id)
         }
     }
 }
