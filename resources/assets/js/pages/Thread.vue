@@ -2,13 +2,14 @@
 import Replies from "../components/Replies.vue";
 import SubscribeButton from "../components/Subscribebutton.vue";
 export default {
-    props: ['initialrepliescount'],
+    props: ['dataRepliesCount', 'dataLocked'],
     components: {
         Replies
     },
      data(){
         return {
-            repliesCount: this.initialrepliescount
+            repliesCount: this.dataRepliesCount,
+            locked: this.dataLocked
         }
      }
  }
