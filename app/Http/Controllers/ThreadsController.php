@@ -6,10 +6,7 @@ use App\Channel;
 use App\Filters\ThreadsFilters;
 use App\Rules\Recaptcha;
 use App\Thread;
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Zttp\Zttp;
 
 class ThreadsController extends Controller
 {
@@ -112,9 +109,18 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update($channel, Thread $thread)
     {
-        //
+
+        $this->authorize('update', $thread);
+
+        $thread->update(request()->validate([
+            'title' => 'required|spamfree',
+            'body' => 'required|spamfree'
+        ]));
+
+        return $thread;
+
     }
 
     /**

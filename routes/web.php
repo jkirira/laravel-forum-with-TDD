@@ -29,6 +29,7 @@ Route::post('locked-threads/{thread}', 'LockedThreadsController@store')->name('l
 Route::delete('locked-threads/{thread}', 'LockedThreadsController@destroy')->name('locked-threads.destroy')->middleware('admin');
 
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
+Route::patch('/threads/{channel}/{thread}', 'ThreadsController@update');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
 
 //Route::resource('threads', 'ThreadsController');

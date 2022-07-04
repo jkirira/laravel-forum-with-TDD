@@ -4,11 +4,8 @@ namespace Tests\Feature;
 
 use App\Activity;
 use App\Rules\Recaptcha;
-use App\Thread;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateThreadsTest extends TestCase
 {
