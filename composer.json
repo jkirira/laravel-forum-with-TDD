@@ -11,7 +11,8 @@
         "kitetail/zttp": "^0.6.0",
         "laravel/framework": "5.5.*",
         "laravel/scout": "^3.0",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "stevebauman/purify": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.4",
