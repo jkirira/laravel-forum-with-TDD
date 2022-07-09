@@ -2,14 +2,15 @@
 
     <div v-if="signedIn">
         <div class="form-group">
-            <textarea
-                  v-model="body"
-                  name="body"
-                  id="body"
-                  class="form-control"
-                  placeholder="Have something to say?"
-                  rows = 5
-                  required></textarea>
+<!--            <textarea-->
+<!--                  v-model="body"-->
+<!--                  name="body"-->
+<!--                  id="body"-->
+<!--                  class="form-control"-->
+<!--                  placeholder="Have something to say?"-->
+<!--                  rows = 5-->
+<!--                  required></textarea>-->
+            <wysiwyg name="body" v-model="body" placeholder="Have something to say?" :shouldClear="completed"></wysiwyg>
         </div>
 
         <button type="submit"
@@ -30,7 +31,8 @@
     export default {
         data(){
             return{
-                body: ''
+                body: '',
+                completed: false
             }
         },
 
@@ -57,6 +59,8 @@
                     .then(response => {
 
                         this.body = ''
+
+                        this.completed = true
 
                         flash('Your reply has been posted.')
 
