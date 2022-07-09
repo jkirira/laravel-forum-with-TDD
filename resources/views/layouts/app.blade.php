@@ -44,6 +44,10 @@
         [v-cloak]{
             display: none;
         }
+        .ais-highlight > em{
+            background: yellow;
+            font-style: normal;
+        }
     </style>
 
     @yield('header')
