@@ -1,5 +1,6 @@
 window._ = require('lodash');
 import Popper from 'popper.js/dist/umd/popper.js';
+import InstantSearch from 'vue-instantsearch';
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -50,7 +51,9 @@ if( !window.axios.defaults.header['X-CSRF-TOKEN'] )
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-window.events = new Vue();
+window.events = new Vue()
+
+Vue.use(InstantSearch);
 
 let authorizations = require('./authorizations')
 
