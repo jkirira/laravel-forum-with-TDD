@@ -3,13 +3,12 @@
 namespace App;
 
 use App\Events\ThreadReceivedNewReply;
-use App\Notifications\ThreadWasUpdated;
 use Illuminate\Database\Eloquent\Model;
-use App\RecordsActivity;
+use Laravel\Scout\Searchable;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, Searchable;
 
     protected $guarded = [];
 
